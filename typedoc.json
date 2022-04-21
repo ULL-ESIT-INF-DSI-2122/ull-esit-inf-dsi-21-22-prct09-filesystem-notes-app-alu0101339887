@@ -1,6 +1,8 @@
 {
   "entryPoints": [
-    "./src/Ejercicio_LAB/prueba.ts"
+    "./src/Ejercicio_LAB/FilterMapAddReduce.ts",
+    "./src/Ejercicio_LAB/FilterMapReduce.ts",
+    "./src/Ejercicio_LAB/FilterMapSubReduce.ts"
   ],
   "out": "./docs"
 }
