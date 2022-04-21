@@ -72,6 +72,8 @@ npm install --save-dev typescript
 
 npm install
 
+npm install nyc
+
 touch notes.md
 echo "# $1" >> notes.md
 echo "Should add scripts in package.json" >> notes.md
