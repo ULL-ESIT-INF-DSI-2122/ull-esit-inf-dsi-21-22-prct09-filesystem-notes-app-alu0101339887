@@ -16,6 +16,6 @@ export function productTable(N: number): number[][] | string {
     }
     return solArray;
   } else {
-    return 'Error. << N >> debe ser mayor o igual a 1';
+    return 'Error';
   }
 }

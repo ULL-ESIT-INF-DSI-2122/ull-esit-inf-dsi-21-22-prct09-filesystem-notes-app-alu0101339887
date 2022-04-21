@@ -10,7 +10,7 @@ describe('Tests del Ejercicio 01', () => {
     expect(productTable(2)).to.deep.equal([[1, 2], [2, 4]]);
   });
   it('productTable(0) retorna Error', () => {
-    expect(productTable(0)).to.be.equal('Error. << N >> debe ser <= a 1');
+    expect(productTable(0)).to.be.equal('Error');
   });
   it('productTable(3) retorna [[1, 2, 3], [2, 4, 6], [3, 6, 9]]', () => {
     expect(productTable(3)).to.deep.equal([[1, 2, 3], [2, 4, 6], [3, 6, 9]]);
