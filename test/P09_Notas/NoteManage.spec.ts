@@ -30,27 +30,28 @@ describe('Tests de la clase NoteManage', () => {
     expect(noteManage.editNote).to.exist;
     expect(noteManage.editNote).to.be.a('function');
     expect(noteManage.editNote(U, T, B, CA)).not.to.throw;
+    expect(noteManage.editNote(U, 'Nota_1', B, CA)).not.to.throw;
   });
-  it('Debería devolver la nota', () => {
+  it('Debería devolver las notas', () => {
     expect(noteManage.listNotes).to.exist;
     expect(noteManage.listNotes).to.be.a('function');
     expect(noteManage.listNotes(U)).not.to.throw;
+    expect(noteManage.listNotes('Usuario')).not.to.throw;
   });
   it('Debería leer una nota', () => {
     expect(noteManage.readNote).to.exist;
     expect(noteManage.readNote).to.be.a('function');
     expect(noteManage.readNote(U, T)).not.to.throw;
-    CA = 'green';
-    noteManage.addNote(U, T, B, CA);
-    expect(noteManage.readNote(U, T)).not.to.throw;
     CA = 'azul';
     noteManage.addNote(U, T, B, CA);
     expect(noteManage.readNote(U, T)).not.to.throw;
+    expect(noteManage.readNote(U, 'Nota_1')).not.to.throw;
   });
   it('Debería borrar la nota', () => {
     expect(noteManage.deleteNote).to.exist;
     expect(noteManage.deleteNote).to.be.a('function');
     expect(noteManage.deleteNote(U, T)).not.to.throw;
+    expect(noteManage.deleteNote(U, 'Nota_1')).not.to.throw;
   });
   it('Existe un método para crear la ruta del directorio del usuario', () => {
     expect(noteManage.getCreatePath).to.exist;
