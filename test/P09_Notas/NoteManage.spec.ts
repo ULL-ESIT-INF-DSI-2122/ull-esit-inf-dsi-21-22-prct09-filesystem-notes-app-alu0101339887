@@ -1,5 +1,8 @@
 import 'mocha';
 import {expect} from 'chai';
+import sinon from 'sinon';
+
+sinon.stub(console, 'log');
 
 import {NoteManage} from '../../src/P09_Notas/NoteManage';
 
@@ -8,25 +11,25 @@ describe('Tests de la clase NoteManage', () => {
   let U: string;
   let T: string;
   let B: string;
-  let C: string;
+  let CA: string;
   beforeEach(() => {
     noteManage = new NoteManage();
     U = 'Roxana';
     T = 'Primera_Nota';
     B = 'Hola Mundo';
-    C = 'amarillo';
+    CA = 'amarillo';
   });
   it('Debería añadir una nueva nota', () => {
     expect(noteManage.addNote).to.exist;
     expect(noteManage.addNote).to.be.a('function');
-    expect(noteManage.addNote(U, T, B, C)).not.to.throw;
+    expect(noteManage.addNote(U, T, B, CA)).not.to.throw;
   });
   it('Debería editar la nota', () => {
     B = 'Hola Mundo 2';
-    C = 'rojo';
+    CA = 'rojo';
     expect(noteManage.editNote).to.exist;
     expect(noteManage.editNote).to.be.a('function');
-    expect(noteManage.editNote(U, T, B, C)).not.to.throw;
+    expect(noteManage.editNote(U, T, B, CA)).not.to.throw;
   });
   it('Debería devolver la nota', () => {
     expect(noteManage.listNotes).to.exist;
@@ -36,6 +39,12 @@ describe('Tests de la clase NoteManage', () => {
   it('Debería leer una nota', () => {
     expect(noteManage.readNote).to.exist;
     expect(noteManage.readNote).to.be.a('function');
+    expect(noteManage.readNote(U, T)).not.to.throw;
+    CA = 'green';
+    noteManage.addNote(U, T, B, CA);
+    expect(noteManage.readNote(U, T)).not.to.throw;
+    CA = 'azul';
+    noteManage.addNote(U, T, B, CA);
     expect(noteManage.readNote(U, T)).not.to.throw;
   });
   it('Debería borrar la nota', () => {
@@ -61,6 +70,6 @@ describe('Tests de la clase NoteManage', () => {
   it('Existe un método para leer una nota', () => {
     expect(noteManage.getPrint).to.exist;
     expect(noteManage.getPrint).to.be.a('function');
-    expect(noteManage.getPrint(T, B, C)).not.to.throw;
+    expect(noteManage.getPrint(T, B, CA)).not.to.throw;
   });
 });

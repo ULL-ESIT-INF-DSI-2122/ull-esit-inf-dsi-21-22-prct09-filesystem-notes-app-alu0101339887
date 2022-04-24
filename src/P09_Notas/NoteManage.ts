@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 
 /**
  * Clase que gestiona las notas

@@ -1,4 +1,3 @@
-import * as chalk from 'chalk';
 import {NoteManage} from './NoteManage';
 import yargs from 'yargs';
 
@@ -37,7 +36,7 @@ yargs.command({
         typeof argv.title === 'string' &&
         typeof argv.body === 'string' &&
         typeof argv.color === 'string') {
-      console.log(chalk.blue('Añadiendo nota...'));
+      console.log('Añadiendo nota...');
       noteManage.addNote(argv.user, argv.title, argv.body, argv.color);
     }
   },
@@ -76,7 +75,7 @@ yargs.command({
         typeof argv.body === 'string' &&
         typeof argv.user === 'string' &&
         typeof argv.color === 'string') {
-      console.log(chalk.blue('Editando nota...'));
+      console.log('Editando nota...');
       noteManage.editNote(argv.user, argv.title, argv.body, argv.color);
     }
   },
@@ -102,7 +101,7 @@ yargs.command({
   },
   handler: (argv) => {
     if (typeof argv.title === 'string' && typeof argv.user === 'string') {
-      console.log(chalk.blue('Eliminando nota...'));
+      console.log('Eliminando nota...');
       noteManage.deleteNote(argv.user, argv.title);
     }
   },
@@ -123,7 +122,7 @@ yargs.command({
   },
   handler: (argv) => {
     if (typeof argv.user === 'string') {
-      console.log(chalk.blue('Listando notas...'));
+      console.log('Listando notas...');
       noteManage.listNotes(argv.user);
     }
   },
@@ -150,7 +149,7 @@ yargs.command({
   handler: (argv) => {
     if (typeof argv.title === 'string' &&
         typeof argv.user === 'string') {
-      console.log(chalk.blue('Leyendo nota...'));
+      console.log('Leyendo nota...');
       noteManage.readNote(argv.user, argv.title);
     }
   },
