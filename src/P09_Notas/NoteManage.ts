@@ -17,17 +17,21 @@ export class NoteManage {
     this.addDir();
   }
 
+  public getNote(): Note {
+    return this.note;
+  }
+
   /**
    * @description Función que establece la ruta del directorio del usuario
    */
-  public createPath(): void {
+  private createPath(): void {
     this.ruta = `./Notes/${this.note.getAuthor()}`;
   }
 
   /**
    * @description Función que crea el directorio del usuario
    */
-  public addDir(): void {
+  private addDir(): void {
     if (!fs.existsSync(this.ruta)) {
       fs.mkdirSync(this.ruta);
     }
@@ -38,7 +42,7 @@ export class NoteManage {
    * @param titulo Título de la nota
    * @returns {boolean} Devuelve true si la nota existe, false en caso contrario
    */
-  public searchNote(titulo: string): boolean {
+  private searchNote(titulo: string): boolean {
     if (fs.existsSync(`${this.ruta}/${titulo}.json`)) {
       return true;
     }
@@ -48,7 +52,7 @@ export class NoteManage {
   /**
    * @description Función que imprime la nota según el formato establecido
    */
-  public printNote(): void {
+  private printNote(): void {
     const text = `${this.note.getTitle()}\n${this.note.getBody()}`;
     if (this.note.getColor() === 'red') {
       console.log(chalk.red(text));
@@ -81,7 +85,7 @@ export class NoteManage {
    * Función que modifica una nota existente
    * @param titulo Título de la nota
    */
-  public updateNote(titulo: string): void {
+  public editNote(titulo: string): void {
     if (this.searchNote(titulo)) {
       const body = this.note.getBody();
       fs.writeFileSync(`${this.ruta}/${titulo}.json`, body);

@@ -4,7 +4,6 @@
 export class Note {
   constructor(private titulo: string,
               private cuerpo: string,
-              private fecha: string,
               private autor: string,
               private color: string) {}
 
