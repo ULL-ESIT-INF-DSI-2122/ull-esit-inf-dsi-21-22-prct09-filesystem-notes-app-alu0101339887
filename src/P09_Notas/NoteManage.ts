@@ -5,8 +5,10 @@ import chalk from 'chalk';
  * Clase que gestiona las notas
  */
 export class NoteManage {
-  private ruta: string = '';
-  constructor() {}
+  private ruta: string;
+  constructor() {
+    this.ruta = '';
+  }
 
   /**
   * Función que establece la ruta del directorio del usuario
@@ -71,13 +73,14 @@ export class NoteManage {
       /* istanbul ignore next */
       console.log(chalk.red(text));
     } else if (color === 'green' || color === 'verde') {
-      /* istanbul ignore next */
       console.log(chalk.green(text));
-    } else if (color === 'blue' || color === 'azul') {
       /* istanbul ignore next */
+    } else if (color === 'blue' || color === 'azul') {
       console.log(chalk.blue(text));
+      /* istanbul ignore next */
     } else if (color === 'yellow' || color === 'amarillo') {
       console.log(chalk.yellow(text));
+      /* istanbul ignore next */
     } else {
       /* istanbul ignore next */
       console.log(chalk.white(text));
