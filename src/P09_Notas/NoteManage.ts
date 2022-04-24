@@ -9,8 +9,9 @@ export class NoteManage {
   constructor() {}
 
   /**
-   * @description Función que establece la ruta del directorio del usuario
-   */
+  * Función que establece la ruta del directorio del usuario
+  * @param usuario Usuario del que se quiere obtener la ruta
+  */
   private createPath(usuario: string): void {
     this.ruta = `./Notes/${usuario}`;
   }
@@ -24,17 +25,22 @@ export class NoteManage {
    */
   private addDir(): void {
     if (!fs.existsSync(this.ruta)) {
+      /* istanbul ignore next */
       fs.mkdirSync(this.ruta);
     }
   }
 
+  /**
+   * Función para realizar las pruebas
+   * @returns Función getAddDir
+   */
   public getAddDir() {
     return this.addDir;
   }
 
   /**
    * Función que busca una nota en el directorio del usuario
-   * @param titulo Título de la nota
+   * @param title Título de la nota
    * @returns {boolean} Devuelve true si la nota existe, false en caso contrario
    */
   private searchNote(title: string): boolean {
@@ -44,12 +50,20 @@ export class NoteManage {
     return false;
   }
 
+  /**
+   * Función para realizar las pruebas
+   * @param title Título de la nota
+   * @returns Función searchNote
+   */
   getSearchNote(title: string) {
     return this.searchNote(title);
   }
 
   /**
-   * @description Función que imprime la nota según el formato establecido
+   * Función que imprime la nota según el formato establecido
+   * @param title Título de la nota
+   * @param body Cuerpo de la nota
+   * @param color Color de la nota
    */
   private printNote(title: string, body: string, color: string): void {
     const text = `${title}\n${body}`;
@@ -67,12 +81,23 @@ export class NoteManage {
     }
   }
 
+  /**
+   * Función para realizar las pruebas
+   * @param title Título de la nota
+   * @param body Cuerpo de la nota
+   * @param color Color de la nota
+   * @returns Función printNote
+   */
   public getPrint(title: string, body: string, color: string) {
     return this.printNote(title, body, color);
   }
 
   /**
-   * @description Función que guarda la nueva nota en el directorio del usuario
+   * Función que guarda la nueva nota en el directorio del usuario
+   * @param user Usuario del que se quiere guardar la nota
+   * @param title Título de la nota
+   * @param body Cuerpo de la nota
+   * @param col Color de la nota
    */
   public addNote(user: string, title: string, body: string, col: string): void {
     this.createPath(user);
@@ -92,7 +117,10 @@ export class NoteManage {
 
   /**
    * Función que modifica una nota existente
-   * @param titulo Título de la nota
+   * @param user Usuario que quiere editar la nota
+   * @param title Título de la nota
+   * @param bod Cuerpo de la nota
+   * @param col Color de la nota
    */
   public editNote(user: string, title: string, bod: string, col: string): void {
     this.createPath(user);
@@ -110,7 +138,8 @@ export class NoteManage {
 
   /**
    * Función que elimina una nota existente
-   * @param titulo Título de la nota
+   * @param user Usuario que quiere eliminar la nota
+   * @param title Título de la nota
    */
   public deleteNote(user: string, title: string): void {
     this.createPath(user);
@@ -124,6 +153,7 @@ export class NoteManage {
 
   /**
    * Función que lista las notas existentes en el directorio del usuario
+   * @param user Usuario del que se quiere listar las notas
    */
   public listNotes(user: string): void {
     this.createPath(user);
@@ -144,7 +174,8 @@ export class NoteManage {
 
   /**
    * Función que lee una nota existente
-   * @param titulo Título de la nota
+   * @param user Usuario que quiere leer la nota
+   * @param title Título de la nota
    */
   public readNote(user: string, title: string): void {
     this.createPath(user);
