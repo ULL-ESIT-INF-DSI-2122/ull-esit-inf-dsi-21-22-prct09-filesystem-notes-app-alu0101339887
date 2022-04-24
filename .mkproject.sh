@@ -188,3 +188,10 @@ echo "        uses: SonarSource/sonarcloud-github-action@master" >> sonarcloud.y
 echo "        env:" >> sonarcloud.yml
 echo "          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any" >> sonarcloud.yml
 echo "          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}" >> sonarcloud.yml
+
+npm install --save-dev @types/node
+
+npm install chalk@4.1.2
+
+npm install yargs
+npm install --save-dev @types/yargs

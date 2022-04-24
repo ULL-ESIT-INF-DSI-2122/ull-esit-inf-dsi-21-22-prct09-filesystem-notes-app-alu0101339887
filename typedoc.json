@@ -2,7 +2,10 @@
   "entryPoints": [
     "./src/Ejercicio_LAB/FilterMapAddReduce.ts",
     "./src/Ejercicio_LAB/FilterMapReduce.ts",
-    "./src/Ejercicio_LAB/FilterMapSubReduce.ts"
+    "./src/Ejercicio_LAB/FilterMapSubReduce.ts",
+    "./src/P09_Notas/Note.ts",
+    "./src/P09_Notas/NoteApp.ts",
+    "./src/P09_Notas/NoteManage.ts"
   ],
   "out": "./docs"
 }
