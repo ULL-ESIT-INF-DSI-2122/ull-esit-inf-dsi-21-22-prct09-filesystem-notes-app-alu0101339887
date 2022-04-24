@@ -1,10 +1,8 @@
 import * as chalk from 'chalk';
 import {NoteManage} from './NoteManage';
-import {Note} from './Note';
 import yargs from 'yargs';
 
-const note = new Note('', '', '', '');
-const noteManage = new NoteManage(note);
+const noteManage = new NoteManage();
 
 /**
  * Comando add. Añade una nota al directorio del usuario
@@ -13,6 +11,11 @@ yargs.command({
   command: 'add',
   describe: 'Añade una nueva nota',
   builder: {
+    user: {
+      describe: 'Autor de la nota',
+      demandOption: true,
+      type: 'string',
+    },
     title: {
       describe: 'Título de la nota',
       demandOption: true,
@@ -23,11 +26,6 @@ yargs.command({
       demandOption: true,
       type: 'string',
     },
-    autor: {
-      describe: 'Autor de la nota',
-      demandOption: true,
-      type: 'string',
-    },
     color: {
       describe: 'Color de la nota',
       demandOption: true,
@@ -35,17 +33,12 @@ yargs.command({
     },
   },
   handler: (argv) => {
-    if (typeof argv.title === 'string' &&
+    if (typeof argv.user === 'string' &&
+        typeof argv.title === 'string' &&
         typeof argv.body === 'string' &&
-        typeof argv.autor === 'string' &&
         typeof argv.color === 'string') {
-      noteManage.getNote().setTitle(argv.title);
-      noteManage.getNote().setBody(argv.body);
-      noteManage.getNote().setAuthor(argv.autor);
-      noteManage.getNote().setColor(argv.color);
-      noteManage.init();
       console.log(chalk.blue('Añadiendo nota...'));
-      noteManage.addNote();
+      noteManage.addNote(argv.user, argv.title, argv.body, argv.color);
     }
   },
 });
@@ -57,6 +50,11 @@ yargs.command({
   command: 'edit',
   describe: 'Edita una nota',
   builder: {
+    user: {
+      describe: 'Autor de la nota',
+      demandOption: true,
+      type: 'string',
+    },
     title: {
       describe: 'Título de la nota',
       demandOption: true,
@@ -64,11 +62,6 @@ yargs.command({
     },
     body: {
       describe: 'Cuerpo de la nota',
-      demandOption: true,
-      type: 'string',
-    },
-    autor: {
-      describe: 'Autor de la nota',
       demandOption: true,
       type: 'string',
     },
@@ -81,15 +74,10 @@ yargs.command({
   handler: (argv) => {
     if (typeof argv.title === 'string' &&
         typeof argv.body === 'string' &&
-        typeof argv.autor === 'string' &&
+        typeof argv.user === 'string' &&
         typeof argv.color === 'string') {
-      noteManage.getNote().setTitle(argv.title);
-      noteManage.getNote().setBody(argv.body);
-      noteManage.getNote().setAuthor(argv.autor);
-      noteManage.getNote().setColor(argv.color);
-      noteManage.init();
       console.log(chalk.blue('Editando nota...'));
-      noteManage.editNote(argv.title);
+      noteManage.editNote(argv.user, argv.title, argv.body, argv.color);
     }
   },
 });
@@ -101,6 +89,11 @@ yargs.command({
   command: 'delete',
   describe: 'Elimina una nota',
   builder: {
+    user: {
+      describe: 'Autor de la nota',
+      demandOption: true,
+      type: 'string',
+    },
     title: {
       describe: 'Título de la nota',
       demandOption: true,
@@ -108,11 +101,9 @@ yargs.command({
     },
   },
   handler: (argv) => {
-    if (typeof argv.title === 'string') {
-      noteManage.getNote().setTitle(argv.title);
-      noteManage.init();
+    if (typeof argv.title === 'string' && typeof argv.user === 'string') {
       console.log(chalk.blue('Eliminando nota...'));
-      noteManage.deleteNote(argv.title);
+      noteManage.deleteNote(argv.user, argv.title);
     }
   },
 });
@@ -123,10 +114,18 @@ yargs.command({
 yargs.command({
   command: 'list',
   describe: 'Lista las notas del directorio del usuario',
-  handler: () => {
-    noteManage.init();
-    console.log(chalk.blue('Listando notas...'));
-    noteManage.listNotes();
+  builder: {
+    user: {
+      describe: 'Autor de la nota',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler: (argv) => {
+    if (typeof argv.user === 'string') {
+      console.log(chalk.blue('Listando notas...'));
+      noteManage.listNotes(argv.user);
+    }
   },
 });
 
@@ -137,6 +136,11 @@ yargs.command({
   command: 'read',
   describe: 'Lee una nota',
   builder: {
+    user: {
+      describe: 'Autor de la nota',
+      demandOption: true,
+      type: 'string',
+    },
     title: {
       describe: 'Título de la nota',
       demandOption: true,
@@ -144,11 +148,10 @@ yargs.command({
     },
   },
   handler: (argv) => {
-    if (typeof argv.title === 'string') {
-      noteManage.getNote().setTitle(argv.title);
-      noteManage.init();
+    if (typeof argv.title === 'string' &&
+        typeof argv.user === 'string') {
       console.log(chalk.blue('Leyendo nota...'));
-      noteManage.readNote(argv.title);
+      noteManage.readNote(argv.user, argv.title);
     }
   },
 });

@@ -1,31 +1,22 @@
 import * as fs from 'fs';
 import * as chalk from 'chalk';
-import {Note} from './Note';
 
 /**
  * Clase que gestiona las notas
  */
 export class NoteManage {
   private ruta: string = '';
-  constructor(private note: Note) {}
-
-  /**
-   * @description Función que inicializa la creación del directorio del usuario
-   */
-  public init(): void {
-    this.createPath();
-    this.addDir();
-  }
-
-  public getNote(): Note {
-    return this.note;
-  }
+  constructor() {}
 
   /**
    * @description Función que establece la ruta del directorio del usuario
    */
-  private createPath(): void {
-    this.ruta = `./Notes/${this.note.getAuthor()}`;
+  private createPath(usuario: string): void {
+    this.ruta = `./Notes/${usuario}`;
+  }
+
+  public getCreatePath(usuario: string) {
+    return this.createPath(usuario);
   }
 
   /**
@@ -37,44 +28,62 @@ export class NoteManage {
     }
   }
 
+  public getAddDir() {
+    return this.addDir;
+  }
+
   /**
    * Función que busca una nota en el directorio del usuario
    * @param titulo Título de la nota
    * @returns {boolean} Devuelve true si la nota existe, false en caso contrario
    */
-  private searchNote(titulo: string): boolean {
-    if (fs.existsSync(`${this.ruta}/${titulo}.json`)) {
+  private searchNote(title: string): boolean {
+    if (fs.existsSync(`${this.ruta}/${title}.json`)) {
       return true;
     }
     return false;
   }
 
+  getSearchNote(title: string) {
+    return this.searchNote(title);
+  }
+
   /**
    * @description Función que imprime la nota según el formato establecido
    */
-  private printNote(): void {
-    const text = `${this.note.getTitle()}\n${this.note.getBody()}`;
-    if (this.note.getColor() === 'red') {
+  private printNote(title: string, body: string, color: string): void {
+    const text = `${title}\n${body}`;
+    if (color === 'red' || color === 'rojo') {
       console.log(chalk.red(text));
-    } else if (this.note.getColor() === 'green') {
+    } else if (color === 'green' || color === 'verde') {
       console.log(chalk.green(text));
-    } else if (this.note.getColor() === 'blue') {
+    } else if (color === 'blue' || color === 'azul') {
       console.log(chalk.blue(text));
-    } else if (this.note.getColor() === 'yellow') {
+    } else if (color === 'yellow' || color === 'amarillo') {
       console.log(chalk.yellow(text));
     } else {
       console.log(chalk.white(text));
-      console.log(chalk.red(`El color ${this.note.getColor()} no disponible`));
+      console.log(chalk.red(`El color ${color} no disponible`));
     }
+  }
+
+  public getPrint(title: string, body: string, color: string) {
+    return this.printNote(title, body, color);
   }
 
   /**
    * @description Función que guarda la nueva nota en el directorio del usuario
    */
-  public addNote(): void {
-    const body = this.note.getBody();
-    if (!this.searchNote(this.note.getTitle())) {
-      fs.writeFileSync(`${this.ruta}/${this.note.getTitle()}.json`, body);
+  public addNote(user: string, title: string, body: string, col: string): void {
+    this.createPath(user);
+    this.addDir();
+    const filePath = `${this.ruta}/${title}.json`;
+    if (!this.searchNote(title)) {
+      fs.writeFileSync(filePath, JSON.stringify({
+        title: title,
+        body: body,
+        color: col,
+      }));
       console.log(chalk.green('Nota guardada correctamente'));
     } else {
       console.log(chalk.red('La nota ya existe'));
@@ -85,10 +94,14 @@ export class NoteManage {
    * Función que modifica una nota existente
    * @param titulo Título de la nota
    */
-  public editNote(titulo: string): void {
-    if (this.searchNote(titulo)) {
-      const body = this.note.getBody();
-      fs.writeFileSync(`${this.ruta}/${titulo}.json`, body);
+  public editNote(user: string, title: string, bod: string, col: string): void {
+    this.createPath(user);
+    if (this.searchNote(title)) {
+      const filePath = `${this.ruta}/${title}.json`;
+      const note_ = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      note_.body = bod;
+      note_.color = col;
+      fs.writeFileSync(filePath, JSON.stringify(note_));
       console.log(chalk.green('Nota actualizada correctamente'));
     } else {
       console.log(chalk.red('La nota no existe'));
@@ -99,9 +112,10 @@ export class NoteManage {
    * Función que elimina una nota existente
    * @param titulo Título de la nota
    */
-  public deleteNote(titulo: string): void {
-    if (this.searchNote(titulo)) {
-      fs.unlinkSync(`${this.ruta}/${titulo}.json`);
+  public deleteNote(user: string, title: string): void {
+    this.createPath(user);
+    if (this.searchNote(title)) {
+      fs.unlinkSync(`${this.ruta}/${title}.json`);
       console.log(chalk.green('Nota eliminada correctamente'));
     } else {
       console.log(chalk.red('La nota no existe'));
@@ -111,7 +125,8 @@ export class NoteManage {
   /**
    * Función que lista las notas existentes en el directorio del usuario
    */
-  public listNotes(): void {
+  public listNotes(user: string): void {
+    this.createPath(user);
     if (fs.existsSync(this.ruta)) {
       const notes = fs.readdirSync(this.ruta);
       if (notes.length === 0) {
@@ -131,11 +146,14 @@ export class NoteManage {
    * Función que lee una nota existente
    * @param titulo Título de la nota
    */
-  public readNote(titulo: string): void {
-    if (this.searchNote(titulo)) {
-      const body = fs.readFileSync(`${this.ruta}/${titulo}.json`, 'utf-8');
-      this.note.setBody(body);
-      this.printNote();
+  public readNote(user: string, title: string): void {
+    this.createPath(user);
+    if (this.searchNote(title)) {
+      const note = fs.readFileSync(`${this.ruta}/${title}.json`, 'utf-8');
+      const note_ = JSON.parse(note);
+      const body = note_.body;
+      const color = note_.color;
+      this.printNote(title, body, color);
     } else {
       console.log(chalk.red('La nota no existe'));
     }
