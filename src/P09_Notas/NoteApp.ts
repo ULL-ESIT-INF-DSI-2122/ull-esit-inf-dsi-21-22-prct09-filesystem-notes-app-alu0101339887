@@ -4,7 +4,7 @@ import yargs from 'yargs';
 const noteManage = new NoteManage();
 
 /**
- * Comando add. Añade una nota al directorio del usuario
+ * Comando add. Añade una nota al directorio del usuario.
  */
 yargs.command({
   command: 'add',
